@@ -14,6 +14,7 @@ dispatch(sampleFunc()) 예를들어 이런 식으로 넣는다
 
 대신, 아무 함수나 넣는게 아니라 dispatch안에 넣을 함수는 형태가 아래처럼 넣는 것을 추천한다
 
+```
 const sampleFunc = (param) => async (dispatch) => {
 
     <!-- // 보통 이런꼴
@@ -27,6 +28,8 @@ const sampleFunc = (param) => async (dispatch) => {
     } -->
 
 };
+
+```
 
 아직 제대로 아는 것은 아니지만 이렇게 쓴다고 카드라~
 
