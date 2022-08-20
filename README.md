@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# redux-thunk
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## thunk를 왜쓰냐?
 
-## Available Scripts
+기존 dispatch는 param으로 객체형태만 받아들였다
 
-In the project directory, you can run:
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
-### `npm start`
+해주면
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+dispatch 에 객체뿐만 아니라 함수를 넣을 수 있다 그럼 코드가 보기 깔끔하다
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+dispatch(sampleFunc()) 예를들어 이런 식으로 넣는다
 
-### `npm test`
+대신, 아무 함수나 넣는게 아니라 dispatch안에 넣을 함수는 형태가 아래처럼 넣는 것을 추천한다
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+const sampleFunc = (param) => async (dispatch) => {
 
-### `npm run build`
+    <!-- // 보통 이런꼴
+    dispatch({ type, param });
+    try {
+      // 결과물의 이름을 payload 라는 이름으로 통일시킵니다.
+      const payload = await promiseCreator(param);
+      dispatch({ type: SUCCESS, payload }); // 성공
+    } catch (e) {
+      dispatch({ type: ERROR, payload: e, error: true }); // 실패
+    } -->
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+};
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+아직 제대로 아는 것은 아니지만 이렇게 쓴다고 카드라~
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+더 공부해서 더 자세하게 나중에 적을거다~
